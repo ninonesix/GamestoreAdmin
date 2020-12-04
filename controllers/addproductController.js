@@ -6,3 +6,7 @@ exports.addproduct = async(req,res,next)=>{
     res.redirect('/product');
 
 }
+
+exports.add = (req,res,next) => {
+    res.render('product/add-product');
+};

@@ -62,7 +62,7 @@ exports.deletegame = async(gametitle) =>{
 //updateGameByName("Dragon Age II", { Price: 30$, genre: FPS });
 exports.updateGameByName = async(nameOfGame, updatedInfo) =>{
     const gamecollection = db().collection('Our games');
-    result = await gamecollection.updateOne({ name: nameOfGame }, { $set: updatedInfo });
+    result = await gamecollection.updateOne({ title: nameOfGame }, { $set: updatedInfo });
     console.log(`${result.matchedCount} document(s) matched the query criteria.`);
     console.log(`${result.modifiedCount} document(s) was/were updated.`);
 }

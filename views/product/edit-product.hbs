@@ -11,17 +11,15 @@
                     <div class="col-xl-6 col-lg-6 col-md-12">
                         <form action="" method="post" class="tm-edit-product-form">
                             <div class="form-group mb-3">
-                                <label for="name">Product Name
-                                </label>
-                                <input id="name" name="name" type="text" value="Lorem Ipsum Product"
+                                <label for="name">Product Name</label>
+                                <input id="name" name="name" type="text" value="{{game.title}}"
                                     class="form-control validate" />
                             </div>
                             <div class="form-group mb-3">
                                 <label for="description">Description</label>
-                                <textarea class="form-control validate tm-small" rows="5"
-                                    required>Lorem ipsum dolor amet gentrify glossier locavore messenger bag chillwave hashtag irony migas wolf kale chips small batch kogi direct trade shaman.</textarea>
+                                <textarea id="description" name="description" class="form-control validate tm-small" rows="5">{{game.Description}}</textarea>
                             </div>
-                            <div class="form-group mb-3">
+                            {{!-- <div class="form-group mb-3">
                                 <label for="category">Category</label>
                                 <select class="custom-select tm-select-accounts" id="category">
                                     <option>Select category</option>
@@ -29,18 +27,18 @@
                                     <option value="2">Most Popular</option>
                                     <option value="3">Trending</option>
                                 </select>
-                            </div>
+                            </div> --}}
                             <div class="row">
                                 <div class="form-group mb-3 col-xs-12 col-sm-6">
-                                    <label for="expire_date">Expire Date
+                                    <label for="basePrice">BASE PRICE
                                     </label>
-                                    <input id="expire_date" name="expire_date" type="text" value="22 Oct, 2020"
+                                    <input id="basePrice" name="basePrice" type="text" value="{{game.basePrice}}"
                                         class="form-control validate" data-large-mode="true" />
                                 </div>
                                 <div class="form-group mb-3 col-xs-12 col-sm-6">
-                                    <label for="stock">Units In Stock
+                                    <label for="cover">IMAGE LINK
                                     </label>
-                                    <input id="stock" name="stock" type="text" value="19,765"
+                                    <input id="cover" name="cover" type="text" value="{{game.cover}}"
                                         class="form-control validate" />
                                 </div>
                             </div>
@@ -48,15 +46,15 @@
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
                         <div class="tm-product-img-edit mx-auto">
-                            <img src="img/product-image.jpg" alt="Product image" class="img-fluid d-block mx-auto">
-                            <i class="fas fa-cloud-upload-alt tm-upload-icon"
-                                onclick="document.getElementById('fileInput').click();"></i>
+                            <img src="{{game.cover}}" alt="Product image" class="img-fluid d-block mx-auto">
+                            {{!-- <i class="fas fa-cloud-upload-alt tm-upload-icon"
+                                onclick="//document.getElementById('fileInput').click();"></i> --}}
                         </div>
-                        <div class="custom-file mt-3 mb-3">
+                        {{!-- <div class="custom-file mt-3 mb-3">
                             <input id="fileInput" type="file" style="display:none;" />
                             <input type="button" class="btn btn-primary btn-block mx-auto" value="CHANGE IMAGE NOW"
-                                onclick="document.getElementById('fileInput').click();" />
-                        </div>
+                                onclick="//document.getElementById('fileInput').click();" />
+                        </div> --}}
                     </div>
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary btn-block text-uppercase">Update Now</button>
