@@ -36,17 +36,7 @@ exports.getsamegenre = async(gamegenre) =>{
 // Thêm 1 game 
 exports.addnewgame = async(gameinfo) =>{
     const gamecollection = db().collection('Our games');
-    const games = await gamecollection.find({}).toArray();
-    let max = parseInt(games[0].id);
-    for( i = 1; i < games.length; i++)
-    {
-        if(parseInt(games[i].id) > max){
-            max = parseInt(games[i].id);
-        };
-        console.log(max);
-    }
-    max++;
-    gameinfo.id = max + "";
+    gameinfo.id = await db().collection('Our games').countDocuments() + 1 ;
     const result = await gamecollection.insertOne(gameinfo);
     console.log(`New listing created with the following id: ${result.insertedId}`);
 }
@@ -67,3 +57,15 @@ exports.updateGameByName = async(nameOfGame, updatedInfo) =>{
     console.log(`${result.modifiedCount} document(s) was/were updated.`);
 }
 
+//Lấy số lượng game
+exports.getGameCount = async()=>{
+    const gameCount = await db().collection('Our games').countDocuments();
+    return gameCount;
+}
+
+//Lấy game theo trang
+exports.getbypage = async(page_number, item_per_page )=>{
+    const gamecollection = db().collection('Our games');
+    const games = await gamecollection.find({}).skip((page_number - 1)*item_per_page).limit(item_per_page).toArray();
+    return games;
+}
