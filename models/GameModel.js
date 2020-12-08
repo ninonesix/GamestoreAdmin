@@ -36,7 +36,7 @@ exports.getsamegenre = async(gamegenre) =>{
 // Thêm 1 game 
 exports.addnewgame = async(gameinfo) =>{
     const gamecollection = db().collection('Our games');
-    gameinfo.id = await db().collection('Our games').countDocuments() + 1 ;
+    gameinfo.id = await db().collection('Our games').countDocuments() + 1 + "" ;
     const result = await gamecollection.insertOne(gameinfo);
     console.log(`New listing created with the following id: ${result.insertedId}`);
 }
