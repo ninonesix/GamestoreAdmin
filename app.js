@@ -6,7 +6,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const hbs = require('hbs');
-var paginate = require('handlebars-paginate');
+var paginate = require('dontfinthis');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -15,6 +15,7 @@ const addproductRouter = require('./routes/add-product')
 const editproductRouter = require('./routes/edit-product')
 const accountRouter = require('./routes/account');
 const reportRouter = require('./routes/report');
+const searchRouter = require('./routes/search');
 
 
 const app = express();
@@ -38,6 +39,7 @@ app.use('/account',accountRouter);
 app.use('/product',productRouter);
 app.use('/add-product',addproductRouter);
 app.use('/edit-product',editproductRouter);
+app.use('/search',searchRouter);
 
 
 // catch 404 and forward to error handler

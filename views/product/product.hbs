@@ -1,4 +1,19 @@
 <div class="container mt-5">
+    <div class="row justify-content-center">
+        <!-- Search form -->
+        <div class="col-6">
+            <div class="search-bar">
+                <div class="wrap">
+                    <form class="search">
+                        <input type="text" class="searchTerm" placeholder="What are you looking for?">
+                        <button type="submit" class="searchButton">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row tm-content-row">
         <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
             <div class="tm-bg-primary-dark tm-block tm-block-products">
@@ -45,21 +60,24 @@
                         <ul class="pagination">
                             <div class="pagination pagination-centered">
                                 {{#paginate pagination type="first"}}
-                                <li {{#if disabled}}class="disabled" {{/if}}><a href="?page={{n}}">First</a></li>
+                                <li {{#if disabled}}class="disabled" {{/if}}><a href="{{parent}}page={{n}}">First</a>
+                                </li>
                                 {{/paginate}}
                                 {{#paginate pagination type="previous"}}
-                                <li {{#if disabled}}class="disabled" {{/if}}><a href="?page={{n}}">Prev</a></li>
+                                <li {{#if disabled}}class="disabled" {{/if}}><a href="{{parent}}page={{n}}">Prev</a>
+                                </li>
                                 {{/paginate}}
                                 {{#paginate pagination type="middle" limit="3"}}
-                                <li {{#if active}}class="active" {{/if}}><a href="?page={{n}}">{{n}}</a></li>
+                                <li {{#if active}}class="active" {{/if}}><a href="{{parent}}page={{n}}">{{n}}</a></li>
                                 {{/paginate}}
                                 {{#paginate pagination type="next"}}
-                                <li {{#if disabled}}class="disabled" {{/if}}><a href="?page={{n}}">Next</a></li>
+                                <li {{#if disabled}}class="disabled" {{/if}}><a href="{{parent}}page={{n}}">Next</a>
+                                </li>
                                 {{/paginate}}
                                 {{#paginate pagination type="last"}}
-                                <li {{#if disabled}}class="disabled" {{/if}}><a href="?page={{n}}">Last</a></li>
+                                <li {{#if disabled}}class="disabled" {{/if}}><a href="{{parent}}page={{n}}">Last</a>
+                                </li>
                                 {{/paginate}}
-
                             </div>
                         </ul>
                     </div>
@@ -73,7 +91,7 @@
                     <table class="table tm-table-small tm-product-table">
                         <tbody>
                             <tr>
-                                <td class="tm-product-name">Product Category 1</td>
+                                <td class="tm-product-name"><a href="/search/Strategy">Strategy</a></td>
                                 <td class="text-center">
                                     <a href="#" class="tm-product-delete-link">
                                         <i class="far fa-trash-alt tm-product-delete-icon"></i>
@@ -81,7 +99,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="tm-product-name">Product Category 2</td>
+                                <td class="tm-product-name"><a href="/search/Fighting">Fighting</a></td>
                                 <td class="text-center">
                                     <a href="#" class="tm-product-delete-link">
                                         <i class="far fa-trash-alt tm-product-delete-icon"></i>
@@ -89,7 +107,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="tm-product-name">Product Category 3</td>
+                                <td class="tm-product-name"><a href="/search/Shooter">Shooter</a></td>
                                 <td class="text-center">
                                     <a href="#" class="tm-product-delete-link">
                                         <i class="far fa-trash-alt tm-product-delete-icon"></i>
@@ -97,72 +115,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="tm-product-name">Product Category 4</td>
+                                <td class="tm-product-name"><a href="/search/RPG">RPG</a></td>
                                 <td class="text-center">
                                     <a href="#" class="tm-product-delete-link">
                                         <i class="far fa-trash-alt tm-product-delete-icon"></i>
                                     </a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="tm-product-name">Product Category 5</td>
-                                <td class="text-center">
-                                    <a href="#" class="tm-product-delete-link">
-                                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tm-product-name">Product Category 6</td>
-                                <td class="text-center">
-                                    <a href="#" class="tm-product-delete-link">
-                                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tm-product-name">Product Category 7</td>
-                                <td class="text-center">
-                                    <a href="#" class="tm-product-delete-link">
-                                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tm-product-name">Product Category 8</td>
-                                <td class="text-center">
-                                    <a href="#" class="tm-product-delete-link">
-                                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tm-product-name">Product Category 9</td>
-                                <td class="text-center">
-                                    <a href="#" class="tm-product-delete-link">
-                                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tm-product-name">Product Category 10</td>
-                                <td class="text-center">
-                                    <a href="#" class="tm-product-delete-link">
-                                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tm-product-name">Product Category 11</td>
-                                <td class="text-center">
-                                    <a href="#" class="tm-product-delete-link">
-                                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
                 <!-- table container -->
                 <button class="btn btn-primary btn-block text-uppercase mb-3">
                     Add new category

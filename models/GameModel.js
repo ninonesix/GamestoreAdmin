@@ -1,4 +1,5 @@
 const {db} = require('../db/db');
+const {ObjectId} = require('mongodb');
 
 //Khai báo biến collection
 
@@ -26,12 +27,6 @@ exports.getonebyid = async (gameid) => {
     return game;
 }
 
-//Tìm nhiều game có cùng genre
-exports.getsamegenre = async(gamegenre) =>{
-    const gamecollection = db().collection('Our games');
-    const games = await gamecollection.find({genre: gamegenre}).toArray();
-    return games;
-}
  
 // Thêm 1 game 
 exports.addnewgame = async(gameinfo) =>{
@@ -67,5 +62,44 @@ exports.getGameCount = async()=>{
 exports.getbypage = async(page_number, item_per_page )=>{
     const gamecollection = db().collection('Our games');
     const games = await gamecollection.find({}).skip((page_number - 1)*item_per_page).limit(item_per_page).toArray();
+    return games;
+}
+
+//Lấy số lượng game theo genre
+exports.getGameCountByGenre = async(gamegenre)=>{
+    // chuyển từ thể loại sang object id của thể loại
+    const genreCollection = db().collection('Genres');
+    const genre = await genreCollection.findOne({Genre: {$regex : gamegenre, $options: 'i'}});
+
+    // lấy game từ object id thể loại
+    const gamecollection = db().collection('Our games');
+    const games = await gamecollection.find({category: ObjectId(genre._id)}).toArray();
+    return games.length;
+}
+
+//Lấy số lượng game theo genre
+exports.getGameCountGetsamename = async(gametitle)=>{
+
+    const gamecollection = db().collection('Our games');
+    const games = await gamecollection.find({title: {$regex : gametitle, $options: 'i'}}).toArray();
+    return games.length;
+}
+
+//Tìm game có tên giống vậy
+exports.getbypagesamename = async(page_number, item_per_page, gametitle) =>{
+    const gamecollection = db().collection('Our games');
+    const games = await gamecollection.find({title: {$regex : gametitle, $options: 'i'}}).skip((page_number - 1)*item_per_page).limit(item_per_page).toArray();
+    return games;
+}
+
+//Tìm nhiều game có cùng genre
+exports.getbypagesamegenre = async(page_number, item_per_page,gamegenre) =>{
+    // chuyển từ thể loại sang object id của thể loại
+    const genreCollection = db().collection('Genres');
+    const genre = await genreCollection.findOne({Genre: {$regex : gamegenre, $options: 'i'}});
+
+    // lấy game từ object id thể loại
+    const gamecollection = db().collection('Our games');
+    const games = await gamecollection.find({category: ObjectId(genre._id)}).skip((page_number - 1)*item_per_page).limit(item_per_page).toArray();
     return games;
 }
