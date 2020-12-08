@@ -16,7 +16,6 @@ exports.editproduct = (req,res,next)=>{
             const imageName =fields.name.replace(/\s+/g, '') + "coverImg." + coverImage.name.split('.').pop() ;
             //TODO IMPORTANT: Sửa khi quăng lên cloud 
             fs.copyFileSync(coverImage.path, __dirname +'/../public/images/' + imageName  );
-            fs.copyFileSync(coverImage.path,'/Study/LTW/DOAN/public/images/' + imageName  );
             fields.cover = '/images/'+ imageName;
         }
         
