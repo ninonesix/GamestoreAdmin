@@ -24,7 +24,6 @@
                                 <th scope="col">&nbsp;</th>
                                 <th scope="col">PRODUCT NAME</th>
                                 <th scope="col">BASE PRICE</th>
-                                <th scope="col">Image Link</th>
                                 <th scope="col">ID Number</th>
                                 <th scope="col">&nbsp;</th>
                             </tr>
@@ -32,10 +31,9 @@
                         <tbody>
                             {{#each games}}
                             <tr>
-                                <th scope="row"><input type="checkbox" /></th>
-                                <td> <a href="/edit-product/{{id}}">{{title}}</a></td>
+                                <th scope="row"></th>
+                                <td class="tm-product-name"> <a href="/edit-product/{{id}}">{{title}}</td></a>
                                 <td>{{basePrice}}</td>
-                                <td>{{cover}}</td>
                                 <td>{{id}}</td>
                                 <td>
                                     <form method="POST">
@@ -52,9 +50,6 @@
                 </div>
                 <!-- table container -->
                 <a href="/add-product" class="btn btn-primary btn-block text-uppercase mb-3">Add new product</a>
-                <button class="btn btn-primary btn-block text-uppercase">
-                    Delete selected products
-                </button>
                 <div class="container-fluid">
                     <div class="row d-flex justify-content-center">
                         <ul class="pagination">
@@ -122,6 +117,9 @@
                                     </a>
                                 </td>
                             </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <!-- table container -->
                 <button class="btn btn-primary btn-block text-uppercase mb-3">
                     Add new category
