@@ -20,7 +20,7 @@ exports.addproduct = async (req, res, next) => {
     });
 
     const coverImage = m_files.coverImage;
-    const imageName = formfields.title.replace(/\s+/g, '') + "coverImg." + coverImage.name.split('.').pop();
+    const imageName = formfields.name.replace(/ +/g, "") + "coverImg.jpg";
 
     if (coverImage && coverImage.size > 0) {
         const oldPath = coverImage.path;
@@ -30,9 +30,8 @@ exports.addproduct = async (req, res, next) => {
             if (err) console.log(err)
         })
     }
-
     if (coverImage && coverImage.size > 0) {
-        cloudinary.uploader.upload(__dirname + '/../public/images/' + imageName, { public_id: formfields.title.replace(/\s+/g, '') + "coverImg", folder: 'GameStore/Games', unique_filename: false, overwrite: true, "width": 189, "height": 265 })
+        await cloudinary.uploader.upload(__dirname + '/../public/images/' + imageName, { public_id: formfields.title.replace(/\s+/g, '') + "coverImg", folder: 'GameStore/Games', unique_filename: false, overwrite: true, "width": 189, "height": 265 })
             .then(function (image) {
                 console.log();
                 console.log("** File Upload (Promise)");
@@ -50,7 +49,7 @@ exports.addproduct = async (req, res, next) => {
                 if (err) { console.warn(err); }
             });
     }
-    GameModel.addnewgame(formfields);
+    await GameModel.addnewgame(formfields);
     res.redirect('/product');
 }
 

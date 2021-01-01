@@ -4,7 +4,6 @@ const cloudinary = require('cloudinary').v2;
 
 const GameModel = require('../models/GameModel');
 
-//updateGameByName("Dragon Age II", { Price: 30$, genre: FPS });
 exports.editproduct = async (req, res, next) => {
     const form = formidable({ multiples: true });
     let m_files;
@@ -21,7 +20,7 @@ exports.editproduct = async (req, res, next) => {
     });
 
     const coverImage = m_files.coverImage;
-    const imageName = formfields.name.replace(/\s+/g, '') + "coverImg." + coverImage.name.split('.').pop();
+    const imageName = formfields.name.replace(/ +/g, "") + "coverImg.jpg";
 
     if (coverImage && coverImage.size > 0) {
         const oldPath = coverImage.path;
@@ -31,8 +30,9 @@ exports.editproduct = async (req, res, next) => {
             if (err) console.log(err)
         })
     }
+    let flag = 0;
     if (coverImage && coverImage.size > 0) {
-        cloudinary.uploader.upload(__dirname + '/../public/images/' + imageName, { public_id: formfields.name.replace(/\s+/g, '') + "coverImg", folder: 'GameStore/Games', unique_filename: false, overwrite: true, "width": 189, "height": 265 })
+        await cloudinary.uploader.upload(__dirname + '/../public/images/' + imageName, { public_id: formfields.name.replace(/\s+/g, '') + "coverImg", folder: 'GameStore/Games', unique_filename: false, overwrite: true, "width": 189, "height": 265 })
             .then(function (image) {
                 console.log();
                 console.log("** File Upload (Promise)");
@@ -41,15 +41,22 @@ exports.editproduct = async (req, res, next) => {
                 console.log("* " + image.url);
                 formfields.cover = image.url;
                 console.log("*formfields", formfields);
+                flag = 1;
             })
             .catch(function (err) {
                 console.log();
                 console.log("*** File Upload (Promise)");
                 console.log("*formfields", formfields);
+                flag = 1;
                 if (err) { console.warn(err); }
             });
     }
-    GameModel.updateGameById(req.params.id, { basePrice: formfields.basePrice, cover: formfields.cover, title: formfields.name, Description: formfields.description });
+    if (flag != 0) {
+        await GameModel.updateGameById(req.params.id, { basePrice: formfields.basePrice, cover: formfields.cover, title: formfields.name, Description: formfields.description });
+    } else {
+        await GameModel.updateGameById(req.params.id, { basePrice: formfields.basePrice, title: formfields.name, Description: formfields.description });
+
+    }
     res.redirect('/product');
 
 
