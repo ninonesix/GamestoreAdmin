@@ -54,5 +54,5 @@ exports.addproduct = async (req, res, next) => {
 }
 
 exports.add = (req, res, next) => {
-    res.render('product/add-product');
+    res.render('product/add-product',{ username: res.locals.user.username});
 };

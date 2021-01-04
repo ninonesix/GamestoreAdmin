@@ -102,5 +102,5 @@ exports.editproduct = async (req, res, next) => {
 exports.edit = async (req, res, next) => {
     //Get from model
     const game = await GameModel.getonebyid(req.params.id);
-    res.render('product/edit-product', { game });
+    res.render('product/edit-product', { game,username: res.locals.user.username});
 };

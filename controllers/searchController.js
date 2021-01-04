@@ -58,5 +58,5 @@ exports.categories = async (req, res, next) => {
         page : current_page ,
         pageCount : Math.ceil(parseInt(GameCount) / limit)
     }
-    res.render('product/product', {games, pagination });
+    res.render('product/product', {games, pagination,username: res.locals.user.username });
  };

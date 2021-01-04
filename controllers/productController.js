@@ -14,13 +14,13 @@ exports.overview = async (req,res,next) => {
         pageCount : Math.ceil(parseInt(GameCount) / limit)
     }
 
-    res.render('product/product',{games,pagination});
+    res.render('product/product',{games,pagination,username: res.locals.user.username});
 
 };
 
 exports.delete = async (req,res,next) => {
     console.log(req.body.title);
     await GameModel.deletegame(req.body.title);
-    res.redirect('/product');
+    res.redirect('product/product',{ username: res.locals.user.username});
 };
 
