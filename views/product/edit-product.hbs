@@ -13,11 +13,12 @@
                             <div class="form-group mb-3">
                                 <label for="name">Product Name</label>
                                 <input id="name" name="name" type="text" value="{{game.title}}"
-                                    class="form-control validate" />
+                                    class="form-control validate" required />
                             </div>
                             <div class="form-group mb-3">
                                 <label for="description">Description</label>
-                                <textarea id="description" name="description" class="form-control validate tm-small" rows="5">{{game.Description}}</textarea>
+                                <textarea id="description" name="description" class="form-control validate tm-small"
+                                    rows="5">{{game.Description}}</textarea>
                             </div>
                             {{!-- <div class="form-group mb-3">
                                 <label for="category">Category</label>
@@ -33,13 +34,13 @@
                                     <label for="basePrice">BASE PRICE
                                     </label>
                                     <input id="basePrice" name="basePrice" type="text" value="{{game.basePrice}}"
-                                        class="form-control validate" data-large-mode="true" />
+                                        class="form-control validate" data-large-mode="true" required />
                                 </div>
                                 <div class="form-group mb-3 col-xs-12 col-sm-6">
                                     <label for="cover">IMAGE LINK
                                     </label>
                                     <input id="cover" name="cover" type="text" value="{{game.cover}} "
-                                        class="form-control validate"/>
+                                        class="form-control validate" required />
                                 </div>
                             </div>
 
@@ -50,10 +51,12 @@
                             {{!-- <i class="fas fa-cloud-upload-alt tm-upload-icon"
                                 onclick="//document.getElementById('fileInput').click();"></i> --}}
                         </div>
-                        <div class="custom-file mt-3 mb-3">
-                            <input id="fileInput" type="file" style="display:none;" name="coverImage" />
-                            <input type="button" class="btn btn-primary btn-block mx-auto" value="CHANGE IMAGE NOW"
-                                onclick="document.getElementById('fileInput').click();" />
+                        <div class="custom-file mt-4 ml-5">
+                            <div class="form-group" style="margin-left: 10%;">
+                                <label for="exampleFormControlFile1">Choose your image</label>
+                                <input type="file" class="form-control-file" id="exampleFormControlFile1"
+                                    name="coverImage" required>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12">

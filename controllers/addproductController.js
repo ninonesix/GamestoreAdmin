@@ -1,9 +1,10 @@
 const formidable = require('formidable');
 const fs = require('fs');
 const cloudinary = require('cloudinary').v2;
-
+const path = require('path');
 const GameModel = require('../models/GameModel');
-
+const {ObjectId} = require('mongodb');
+const GenreModel = require('../models/genreModel');
 exports.addproduct = async (req, res, next) => {
     const form = formidable({ multiples: true });
     let m_files;
@@ -20,18 +21,23 @@ exports.addproduct = async (req, res, next) => {
     });
 
     const coverImage = m_files.coverImage;
-    const imageName = formfields.name.replace(/ +/g, "") + "coverImg.jpg";
+    const imageName = formfields.title.replace(/ +/g, "") + "coverImg.jpg";
 
     if (coverImage && coverImage.size > 0) {
+        let files = fs.readdirSync(path.join(__dirname,'..', 'public', 'images'));
+        files.forEach(file => {
+            if(file==imageName)
+            fs.unlinkSync(path.join(__dirname,'..', 'public', 'images',imageName));
+        });
         const oldPath = coverImage.path;
-        const newPath = __dirname + '/../public/images/' + imageName;
+        const newPath = path.join(__dirname,'..', 'public', 'images',imageName);
         const rawData = fs.readFileSync(oldPath);
         fs.writeFile(newPath, rawData, function (err) {
             if (err) console.log(err)
         })
     }
     if (coverImage && coverImage.size > 0) {
-        await cloudinary.uploader.upload(__dirname + '/../public/images/' + imageName, { public_id: formfields.title.replace(/\s+/g, '') + "coverImg", folder: 'GameStore/Games', unique_filename: false, overwrite: true, "width": 189, "height": 265 })
+        await cloudinary.uploader.upload(path.join(__dirname,'..', 'public', 'images',imageName), { public_id: formfields.title.replace(/\s+/g, '') + "coverImg", folder: 'GameStore/Games', unique_filename: false, overwrite: true, "width": 189, "height": 265 })
             .then(function (image) {
                 console.log();
                 console.log("** File Upload (Promise)");
@@ -49,6 +55,9 @@ exports.addproduct = async (req, res, next) => {
                 if (err) { console.warn(err); }
             });
     }
+    const genre = await GenreModel.findgenrebyname(formfields.category);
+    formfields.category = ObjectId(genre._id);
+    formfields.basePrice = parseInt(formfields.basePrice);
     await GameModel.addnewgame(formfields);
     res.redirect('/product');
 }
