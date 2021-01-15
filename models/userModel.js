@@ -76,8 +76,8 @@ exports.getUser = async(userId) => {
 
 exports.getUserByPage = async(page_number,item_per_page) => {
     const userCollection = db().collection('Users');
-    const users = await userCollection.find({}).skip((page_number - 1)*item_per_page).limit(item_per_page).toArray();
-    return users;
+    const user = await userCollection.find({}).skip((page_number - 1)*item_per_page).limit(item_per_page).toArray();
+    return user;
 }
 
 exports.getUser = async(userId) => {

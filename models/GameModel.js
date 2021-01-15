@@ -75,20 +75,20 @@ exports.getbypage = async(page_number, item_per_page )=>{
 exports.getGameCountByGenre = async(gamegenre)=>{
     // chuyển từ thể loại sang object id của thể loại
     const genreCollection = db().collection('Genres');
-    const genre = await genreCollection.findOne({Genre: {$regex : gamegenre, $options: 'i'}});
+    const genre = await genreCollection.findOne({name: {$regex : gamegenre, $options: 'i'}});
 
     // lấy game từ object id thể loại
     const gamecollection = db().collection('Our games');
-    const games = await gamecollection.find({category: ObjectId(genre._id)}).toArray();
-    return games.length;
+    const count = await gamecollection.countDocuments({category: ObjectId(genre._id)});
+    return count;
 }
 
 //Lấy số lượng game theo genre
 exports.getGameCountGetsamename = async(gametitle)=>{
 
     const gamecollection = db().collection('Our games');
-    const games = await gamecollection.find({title: {$regex : gametitle, $options: 'i'}}).toArray();
-    return games.length;
+    const count = await gamecollection.countDocuments({title: {$regex : gametitle, $options: 'i'}});
+    return count;
 }
 
 //Tìm game có tên giống vậy
@@ -102,7 +102,7 @@ exports.getbypagesamename = async(page_number, item_per_page, gametitle) =>{
 exports.getbypagesamegenre = async(page_number, item_per_page,gamegenre) =>{
     // chuyển từ thể loại sang object id của thể loại
     const genreCollection = db().collection('Genres');
-    const genre = await genreCollection.findOne({Genre: {$regex : gamegenre, $options: 'i'}});
+    const genre = await genreCollection.findOne({name: {$regex : gamegenre, $options: 'i'}});
 
     // lấy game từ object id thể loại
     const gamecollection = db().collection('Our games');

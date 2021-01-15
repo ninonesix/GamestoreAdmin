@@ -20,11 +20,9 @@ exports.block = async(req,res,next) => {
     await userModel.changeUserBlocked(req.params.id,user.blocked);
     if(user.blocked) {
         
-        console.log("unblocked");
         res.send({respond: false}); 
     } else {
         
-        console.log("blocked");
         res.send({respond: true});
     }
 }
