@@ -24,7 +24,7 @@
                                 <th scope="col">&nbsp;</th>
                                 <th scope="col">PRODUCT NAME</th>
                                 <th scope="col">BASE PRICE</th>
-                                <th scope="col">ID Number</th>
+                                <th scope="col">Sale Number</th>
                                 <th scope="col">&nbsp;</th>
                             </tr>
                         </thead>
@@ -32,9 +32,9 @@
                             {{#each games}}
                             <tr>
                                 <th scope="row"></th>
-                                <td class="tm-product-name"> <a href="/edit-product/{{id}}">{{title}}</td></a>
+                                <td class="tm-product-name"> <a href="/edit-product/{{_id}}">{{title}}</td></a>
                                 <td>{{basePrice}}</td>
-                                <td>{{id}}</td>
+                                <td>{{sale}}</td>
                                 <td>
                                     <form method="POST">
                                         <button name="title" value="{{title}}" type="submit"

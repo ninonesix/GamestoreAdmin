@@ -23,7 +23,7 @@ exports.getonebytitle = async (gametitle) => {
 //Tìm game bằng id
 exports.getonebyid = async (gameid) => {
     const gamecollection = db().collection('Our games');
-    const game = await gamecollection.findOne({id: gameid});
+    const game = await gamecollection.findOne({_id: ObjectId(gameid)});
     return game;
 }
 
