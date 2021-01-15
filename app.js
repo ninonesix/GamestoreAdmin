@@ -24,6 +24,30 @@ const session = require('express-session');
 
 const app = express();
 
+hbs.registerHelper('eachData', function(context, options) {
+  var fn = options.fn, inverse = options.inverse, ctx;
+  var ret = "";
+
+  if(context && context.length > 0) {
+    for(var i=0, j=context.length; i<j; i++) {
+      ctx = Object.create(context[i]);
+      ctx.index = i;
+      ret = ret + fn(ctx);
+    }
+  } else {
+    ret = inverse(this);
+  }
+  return ret;
+}); 
+
+hbs.registerHelper("math", function(lvalue, operator, rvalue, options) {
+  lvalue = parseFloat(lvalue);
+  rvalue = parseFloat(rvalue);
+  return {
+      "+": lvalue + rvalue
+  }[operator];
+  });
+
 // passport
 app.use(session({secret: 'doubleD',resave: false,saveUninitialized: true,})); // TODO: đưa secret vào env
 app.use(passport.initialize());

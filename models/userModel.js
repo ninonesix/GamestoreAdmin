@@ -28,22 +28,6 @@ exports.deleteuser = async(username) =>{
     console.log(`${result.deletedCount} document(s) was/were deleted.`);
 }
 
-// Sửa 1 user theo tên
-exports.updateuserByName = async(nameOfuser, updatedInfo) =>{
-    const usercollection = db().collection('Users');
-    result = await usercollection.updateOne({ name: nameOfuser }, { $set: updatedInfo });
-    console.log(`${result.matchedCount} document(s) matched the query criteria.`);
-    console.log(`${result.modifiedCount} document(s) was/were updated.`);
-}
-
-exports.updateuserById = async(userId, updatedInfo) =>{
-    const usercollection = db().collection('Users');
-    result = await usercollection.updateOne({ _id: ObjectId(userId) }, { $set: updatedInfo });
-    console.log(`${result.matchedCount} document(s) matched the query criteria.`);
-    console.log(`${result.modifiedCount} document(s) was/were updated.`);
-}
-
-
 //Tìm user có tên giống vậy
 exports.getbypagesamename = async(page_number, item_per_page, username) =>{
     const usercollection = db().collection('Users');
@@ -74,16 +58,4 @@ exports.getUser = async(userId) => {
         return null;
     }
 }
-
-exports.getUserByEmail = async(email) => {
-    const userCollection = db().collection('Users');
-    const user = await userCollection.findOne({email: email});
-    if(user) {
-        return user;
-    }
-    else {
-        return null;
-    }
-}
-
 
