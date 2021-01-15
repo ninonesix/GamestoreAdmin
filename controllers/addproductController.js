@@ -58,6 +58,20 @@ exports.addproduct = async (req, res, next) => {
     const genre = await GenreModel.findgenrebyname(formfields.category);
     formfields.category = ObjectId(genre._id);
     formfields.basePrice = parseInt(formfields.basePrice);
+    formfields.view = parseInt(0);
+    console.log("formfields::",formfields);
+    formfields.multi = false;
+    formfields.single = false;
+    if(formfields.multiplayer != null){
+        formfields.multi = true;
+        delete formfields.multiplayer
+    }
+    if(formfields.singleplayer != null){
+        formfields.single = true;
+        delete formfields.singleplayer;
+    }
+    formfields.req = parseInt(formfields.exampleRadios);
+    delete formfields.exampleRadios;
     await GameModel.addnewgame(formfields);
     res.redirect('/product');
 }
