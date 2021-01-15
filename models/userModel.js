@@ -74,6 +74,12 @@ exports.getUser = async(userId) => {
     }
 }
 
+exports.getUserByPage = async(page_number,item_per_page) => {
+    const userCollection = db().collection('Users');
+    const users = await userCollection.find({}).skip((page_number - 1)*item_per_page).limit(item_per_page).toArray();
+    return users;
+}
+
 exports.getUser = async(userId) => {
     const userCollection = db().collection('Users');
     const user = await userCollection.findOne({_id: ObjectId(userId)});
