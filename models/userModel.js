@@ -28,6 +28,21 @@ exports.deleteuser = async(username) =>{
     console.log(`${result.deletedCount} document(s) was/were deleted.`);
 }
 
+//Tìm 1 user bằng name
+exports.getonebyemail = async (email) => {
+    const usercollection = db().collection('Users');
+    const user = await usercollection.findOne({email: email})
+    return user;
+}
+
+
+// Xoá 1 user theo tên
+exports.deleteuserbyemail = async(email) =>{
+    const usercollection = db().collection('Users');
+    const result = await usercollection.deleteOne({email: email});
+    console.log(`${result.deletedCount} document(s) was/were deleted.`);
+}
+
 //Tìm user có tên giống vậy
 exports.getbypagesamename = async(page_number, item_per_page, username) =>{
     const usercollection = db().collection('Users');
@@ -57,5 +72,33 @@ exports.getUser = async(userId) => {
     else {
         return null;
     }
+}
+
+exports.getUser = async(userId) => {
+    const userCollection = db().collection('Users');
+    const user = await userCollection.findOne({_id: ObjectId(userId)});
+    if(user) {
+        return user;
+    }
+    else {
+        return null;
+    }
+}
+exports.changeUserBlocked = async(userId,blocked) => {
+    let lock;
+    if(blocked == true) {
+        lock = false;
+    } else {
+        lock = true;
+    }
+
+    const userCollection = db().collection('Users');
+    await userCollection.updateOne({
+        _id: ObjectId(userId)
+    },
+    {
+        $set:{blocked: lock}
+    }
+    )
 }
 
