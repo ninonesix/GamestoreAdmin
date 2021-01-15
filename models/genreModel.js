@@ -15,6 +15,6 @@ exports.list = async () => {
 
 exports.findgenrebyname = async(genrename) =>{
     const genrecollection = db().collection('Genres');
-    const genre = await genrecollection.findOne({name:genrename});
+    const genre = await genrecollection.findOne({ name: { $regex : genrename, $options: 'i'}});
     return genre;
 }
