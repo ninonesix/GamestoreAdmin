@@ -14,3 +14,17 @@ exports.user = async(req,res,next) => {
     const user = await userModel.getUser(req.params.id);
     res.render('account/user',{ username: res.locals.user.username,user});
 }
+
+exports.block = async(req,res,next) => {
+    const user = await userModel.getUser(req.params.id);
+    await userModel.changeUserBlocked(req.params.id,user.blocked);
+    if(user.blocked) {
+        
+        console.log("unblocked");
+        res.send({respond: false}); 
+    } else {
+        
+        console.log("blocked");
+        res.send({respond: true});
+    }
+}

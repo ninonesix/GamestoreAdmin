@@ -24,6 +24,10 @@ const session = require('express-session');
 
 const app = express();
 
+hbs.registerHelper('ifEquals', function(arg1, arg2, options) {
+  return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});
+
 hbs.registerHelper('eachData', function(context, options) {
   var fn = options.fn, inverse = options.inverse, ctx;
   var ret = "";
