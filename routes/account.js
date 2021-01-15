@@ -4,5 +4,5 @@ const accountController = require('../controllers/accountController');
 
 /* GET home page. */
 router.get('/',accountController.index);
-
+router.post('/',accountController.edit);
 module.exports = router;

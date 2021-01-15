@@ -14,6 +14,11 @@ exports.getAdmin = async(userId) => {
     }
 }
 
+exports.updateById = async(userId,updatedInfo)=>{
+    const adminCollection = db().collection('Admins');
+    result = await adminCollection.updateOne({ _id: ObjectId(userId) }, { $set: updatedInfo });
+}
+
 //Kiểm tra thông tin user hợp lệ để đăng nhập
 exports.checkCredential = async(username,password) => {
     const admin = await db().collection('Admins').findOne({username: username});

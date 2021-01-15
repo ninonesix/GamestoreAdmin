@@ -21,6 +21,6 @@ exports.overview = async (req,res,next) => {
 exports.delete = async (req,res,next) => {
     console.log(req.body.title);
     await GameModel.deletegame(req.body.title);
-    res.redirect('product/product',{ username: res.locals.user.username});
+    res.render('product/product',{ username: res.locals.user.username});
 };
 
