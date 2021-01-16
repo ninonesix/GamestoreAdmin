@@ -53,7 +53,7 @@ exports.updateGameByName = async(nameOfGame, updatedInfo) =>{
 
 exports.updateGameById = async(IdOfGame, updatedInfo) =>{
     const gamecollection = db().collection('Our games');
-    result = await gamecollection.updateOne({ id: IdOfGame }, { $set: updatedInfo });
+    result = await gamecollection.updateOne({ _id: ObjectId(IdOfGame) }, { $set: updatedInfo });
     console.log(`${result.matchedCount} document(s) matched the query criteria.`);
     console.log(`${result.modifiedCount} document(s) was/were updated.`);
 }

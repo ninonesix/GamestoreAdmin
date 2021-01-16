@@ -1,8 +1,10 @@
 const formidable = require('formidable');
 const fs = require('fs');
 const cloudinary = require('cloudinary').v2;
-
+const path = require('path');
 const GameModel = require('../models/GameModel');
+const {ObjectId} = require('mongodb');
+const GenreModel = require('../models/genreModel');
 
 exports.editproduct = async (req, res, next) => {
     const form = formidable({ multiples: true });
@@ -23,8 +25,13 @@ exports.editproduct = async (req, res, next) => {
     const imageName = formfields.name.replace(/ +/g, "") + "coverImg.jpg";
 
     if (coverImage && coverImage.size > 0) {
+        let files = fs.readdirSync(path.join(__dirname,'..', 'public', 'images'));
+        files.forEach(file => {
+            if(file==imageName)
+            fs.unlinkSync(path.join(__dirname,'..', 'public', 'images',imageName));
+        });
         const oldPath = coverImage.path;
-        const newPath = __dirname + '/../public/images/' + imageName;
+        const newPath = path.join(__dirname,'..', 'public', 'images',imageName);
         const rawData = fs.readFileSync(oldPath);
         fs.writeFile(newPath, rawData, function (err) {
             if (err) console.log(err)
@@ -32,7 +39,7 @@ exports.editproduct = async (req, res, next) => {
     }
     let flag = 0;
     if (coverImage && coverImage.size > 0) {
-        await cloudinary.uploader.upload(__dirname + '/../public/images/' + imageName, { public_id: formfields.name.replace(/\s+/g, '') + "coverImg", folder: 'GameStore/Games', unique_filename: false, overwrite: true, "width": 189, "height": 265 })
+        await cloudinary.uploader.upload(path.join(__dirname,'..', 'public', 'images',imageName), { public_id: formfields.name.replace(/\s+/g, '') + "coverImg", folder: 'GameStore/Games', unique_filename: false, overwrite: true, "width": 189, "height": 265 })
             .then(function (image) {
                 console.log();
                 console.log("** File Upload (Promise)");
@@ -51,12 +58,25 @@ exports.editproduct = async (req, res, next) => {
                 if (err) { console.warn(err); }
             });
     }
+    formfields.multi = false;
+    formfields.single = false;
+    if(formfields.multiplayer != null){
+        formfields.multi = true;
+        delete formfields.multiplayer
+    }
+    if(formfields.singleplayer != null){
+        formfields.single = true;
+        delete formfields.singleplayer;
+    }
+    formfields.req = parseInt(formfields.exampleRadios);
+    delete formfields.exampleRadios;
     if (flag != 0) {
-        await GameModel.updateGameById(req.params.id, { basePrice: formfields.basePrice, cover: formfields.cover, title: formfields.name, Description: formfields.description });
+        await GameModel.updateGameById(req.params.id, { basePrice: formfields.basePrice,single:formfields.single,multi:formfields.multi, req:formfields.req,cover: formfields.cover, title: formfields.name, Description: formfields.description });
     } else {
-        await GameModel.updateGameById(req.params.id, { basePrice: formfields.basePrice, title: formfields.name, Description: formfields.description });
+        await GameModel.updateGameById(req.params.id, { basePrice: formfields.basePrice,single:formfields.single,multi:formfields.multi, req:formfields.req, title: formfields.name, Description: formfields.description });
 
     }
+    console.log('formfields::',formfields);
     res.redirect('/product');
 
 
